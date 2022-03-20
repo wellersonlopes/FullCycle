@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  nginx:
+    build:
+      context: nginx
+    container_name: nginx
+    image: wellersonlopes/fc-docker-desafio02-nginx:1.0.0
+    ports:
+      - 8080:80
+    networks:
+      - fullcyclenet
+    depends_on:
+      - node
+
+  node:
+    build:
+      context: node
+    container_name: node
+    image: wellersonlopes/fc-docker-desafio02-node:1.0.0
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
+    command: node src/index.js
+    expose:
+      - 3000
+    networks:
+      - fullcyclenet
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    restart: always
+    tty: true
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=fullcycle
+    networks:
+      - fullcyclenet
+
+networks:
+  fullcyclenet:
+    name: fullcyclenet
+    driver: bridge
+  
