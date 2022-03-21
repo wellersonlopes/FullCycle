@@ -16,7 +16,7 @@ services:
     build:
       context: node
     container_name: node
-    image: wellersonlopes/fc-docker-desafio02-node:1.0.0
+    image: wellersonlopes/fc-docker-desafio02-node:1.1.0
     entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
     command: node src/index.js
     expose:
