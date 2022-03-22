@@ -1,10 +1,10 @@
 version: "3.9"
 services:
   nginx:
-    #build:
-    #  context: nginx
+    build:
+      context: nginx
     container_name: nginx
-    image: wellersonlopes/fc-docker-desafio02-nginx:1.0.0
+    #image: wellersonlopes/fc-docker-desafio02-nginx:1.0.0
     ports:
       - 8080:80
     networks:
@@ -13,10 +13,10 @@ services:
       - node
 
   node:
-    #build:
-    #  context: node
+    build:
+      context: node
     container_name: node
-    image: wellersonlopes/fc-docker-desafio02-node:1.1.0
+    #image: wellersonlopes/fc-docker-desafio02-node:1.1.0
     entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
     command: node src/index.js
     expose:
